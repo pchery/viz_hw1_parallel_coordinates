@@ -5,7 +5,9 @@ float MIN_AXIS_Y = 100;
 float MAX_AXIS_Y = 800;
 ArrayList<String> axis_variables = new ArrayList<String>();
 Boolean viz_drawn = false;
+Axis[] axes;
 TableReader tr;
+float scale; 
 
 void setup() {
   size(1500, 1000);
@@ -15,14 +17,9 @@ void setup() {
 }
 
 void draw() {
-  float scale = (MAX_AXIS_X-MIN_AXIS_X)/(axis_variables.size()-1);
   if (!viz_drawn) {
-    strokeWeight(3);
-    for (int i=0; i<axis_variables.size();i++) {
-      line(MIN_AXIS_X+(scale*i), MIN_AXIS_Y, MIN_AXIS_X+(scale*i), MAX_AXIS_Y);
-      textAlign(CENTER);
-      fill(0, 102, 153);
-      text(axis_variables.get(i), MIN_AXIS_X+(scale*i), MIN_AXIS_Y-6);
+    for(Axis a: axes){   
+     a.display(); 
     }
     for (int i=2; i<tr.getTable().getRowCount(); i++) {
        for (int j=0; j<axis_variables.size()-1;j++) {
@@ -40,10 +37,7 @@ void draw() {
        }
    }
     viz_drawn = true;
-  }
-  Axis a = new Axis("hello", 150);
-  a.display();
-  
+  } 
 }
 
 void loadData() {
@@ -55,4 +49,10 @@ void loadData() {
       axis_variables.add(variable_names[i]);
     }
   }
+  axes = new Axis[axis_variables.size()];
+  scale = (MAX_AXIS_X-MIN_AXIS_X)/(axis_variables.size()-1);
+  for (int i=0; i<axis_variables.size();i++) {
+      axes[i] = new Axis(axis_variables.get(i), MIN_AXIS_X + (scale*i));
+  }
+  
 }
