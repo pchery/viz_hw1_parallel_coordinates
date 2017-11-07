@@ -12,7 +12,6 @@ void setup() {
   background(255,255,255);
   pixelDensity(displayDensity());
   loadData();
-  print(tr.getMin("model year"));
 }
 
 void draw() {
