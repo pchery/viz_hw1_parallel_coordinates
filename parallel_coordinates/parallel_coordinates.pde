@@ -41,6 +41,8 @@ void draw() {
    }
     viz_drawn = true;
   }
+  Axis a = new Axis("hello", 150);
+  a.display();
   
 }
 
