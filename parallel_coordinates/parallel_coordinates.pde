@@ -17,15 +17,29 @@ void setup() {
 }
 
 void draw() {
-  background(255);
   
   if (!viz_drawn) {
-    
-    for(Axis a: axes){   
+    background(255,255,255);
+    for(Axis a: axes){
      a.display(); 
     }
     
+    ArrayList<TableRow> valid_rows = new ArrayList<TableRow>();
     for (int i=2; i<tr.getTable().getRowCount(); i++) {
+       Boolean valid_row = true;
+       for (int j=0; j<axes.length;j++) {
+         String axis_label = axes[j].getLabel();
+         float axis_widget_min_value = axes[j].getWidgetMin().getValue();
+         float axis_widget_max_value = axes[j].getWidgetMax().getValue();
+         float row_value = tr.getTable().getRow(i).getFloat(axis_label);
+         valid_row = valid_row && (row_value>=axis_widget_min_value && row_value<=axis_widget_max_value);
+       }
+       if (valid_row) {
+         valid_rows.add(tr.getTable().getRow(i));
+       }
+   }
+    
+    for (int i=2; i<valid_rows.size(); i++) {
        for (int j=0; j<axes.length-1;j++) {
          String from = axes[j].getLabel();
          String to = axes[j+1].getLabel();
@@ -33,10 +47,10 @@ void draw() {
          float from_max = tr.getMax(from);
          float to_min = tr.getMin(to);
          float to_max = tr.getMax(to);
-         float from_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(from_max-from_min))*(from_max-tr.getTable().getRow(i).getFloat(from)));
-         float to_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(to_max-to_min))*(to_max-tr.getTable().getRow(i).getFloat(to)));
+         float from_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(from_max-from_min))*(from_max-valid_rows.get(i).getFloat(from)));
+         float to_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(to_max-to_min))*(to_max-valid_rows.get(i).getFloat(to)));
          stroke(204, 102, 0);
-         strokeWeight(0.2);
+         strokeWeight(1);
          line(axes[j].x_pos, from_y_coordinate, axes[j+1].x_pos, to_y_coordinate);
        }
    }
@@ -49,8 +63,9 @@ void draw() {
        axes[i] = temp;
      }
    }
-    //viz_drawn = true;
-  } 
+   
+   viz_drawn = true;
+ } 
 }
 
 void loadData() {
@@ -67,31 +82,33 @@ void loadData() {
   axes = new Axis[axis_variables.size()];
   scale = (MAX_AXIS_X-MIN_AXIS_X)/(axis_variables.size()-1);
   for (int i=0; i<axis_variables.size();i++) {
-      axes[i] = new Axis(axis_variables.get(i), MIN_AXIS_X + (scale*i));
+      String label = axis_variables.get(i);
+      axes[i] = new Axis(label, MIN_AXIS_X + (scale*i), tr.getMin(label), tr.getMax(label));
   }
   
 }
 void mouseDragged(){
   for(Axis axis: axes){
+    axis.getWidgetMin().drag(mouseX, mouseY);
+    axis.getWidgetMax().drag(mouseX, mouseY);
     axis.drag(mouseX);
   }
+  viz_drawn = false;
 }
 
 void mouseClicked(){
   for(Axis axis: axes){
-    axis.highlight(mouseX);
+    if(!axis.getWidgetMin().clicked(mouseX,mouseY) && !axis.getWidgetMax().clicked(mouseX,mouseY)) {
+      axis.highlight(mouseX);
+
+    }
   }
+  viz_drawn = false;
 }
 
 void mouseReleased(){
   for(Axis axis: axes){
     axis.unhighlight();
   }
+  viz_drawn = false;
 }
-
-//void mouseMoved(){
-//  //viz_drawn = false;
-//  for(Axis axis: axes){
-//    axis.move(mouseX);
-//  }
-//}
