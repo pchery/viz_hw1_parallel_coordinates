@@ -18,13 +18,15 @@ void setup() {
 
 void draw() {
   if (!viz_drawn) {
+    
     for(Axis a: axes){   
      a.display(); 
     }
+    
     for (int i=2; i<tr.getTable().getRowCount(); i++) {
-       for (int j=0; j<axis_variables.size()-1;j++) {
-         String from = axis_variables.get(j);
-         String to = axis_variables.get(j+1);
+       for (int j=0; j<axes.length-1;j++) {
+         String from = axes[j].getLabel();
+         String to = axes[j+1].getLabel();
          float from_min = tr.getMin(from);
          float from_max = tr.getMax(from);
          float to_min = tr.getMin(to);
@@ -49,6 +51,8 @@ void loadData() {
       axis_variables.add(variable_names[i]);
     }
   }
+  
+  //Create and load axes
   axes = new Axis[axis_variables.size()];
   scale = (MAX_AXIS_X-MIN_AXIS_X)/(axis_variables.size()-1);
   for (int i=0; i<axis_variables.size();i++) {
