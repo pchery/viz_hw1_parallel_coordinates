@@ -41,16 +41,35 @@ void draw() {
        }
    }
    
-   
-   for(int i = 1; i < axes.length; i++){
+   //handle edge cases
+   for(int i = 1; i < axes.length - 1; i++){
+     
+     if(axes[axes.length - 2].x_pos > axes[axes.length -1].x_pos){
+       Axis temp = axes[axes.length - 2];
+       axes[axes.length - 2] = axes[axes.length - 1];
+       axes[axes.length - 1] = temp;
+     }
+     
      if(axes[i - 1].x_pos > axes[i].x_pos){
        Axis temp = axes[i - 1];
        axes[i - 1] = axes[i];
        axes[i] = temp;
-     }else if(axes[i - 1].x_pos > axes[i].x_pos - 10 && axes[i - 1].x_pos < axes[i].x_pos + 10){
-       axes[i].x_pos += 20;
+     }
+     if(axes[i].highlighted &&(axes[i].x_pos > axes[i-1].x_pos) && (axes[i].x_pos < axes[i-1].x_pos + 20)){
+       axes[i - 1].x_pos -= 20;
     
      }
+     if(axes[i].x_pos > axes[i + 1].x_pos - 20 && axes[i].x_pos < axes[i+1].x_pos && axes[i].highlighted){
+       axes[i + 1].x_pos += 20;
+     }
+     if(axes[axes.length - 1].highlighted && (axes[axes.length - 1].x_pos > axes[axes.length-2].x_pos) && (axes[axes.length - 1].x_pos < axes[axes.length-2].x_pos + 20)){
+       axes[axes.length - 2].x_pos -= 20;
+    
+     }
+      if(axes[0].x_pos > axes[1].x_pos - 20 && axes[0].x_pos < axes[1].x_pos && axes[0].highlighted){
+       axes[1].x_pos += 20;
+     }
+     
    }
     //viz_drawn = true;
   } 
