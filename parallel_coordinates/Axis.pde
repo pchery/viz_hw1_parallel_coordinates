@@ -56,7 +56,6 @@ class Axis{
   void drag(float x){
     if(highlighted){
       this.x_pos = x;
-      this.display();
     }
   }
 }
