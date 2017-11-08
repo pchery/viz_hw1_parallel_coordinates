@@ -1,6 +1,7 @@
 import java.util.Map;
 
 class Axis{
+  boolean highlighted = false;
   float x_pos;
   String label;
   float MIN_AXIS_Y = 100;
@@ -17,8 +18,12 @@ class Axis{
   }
   
   void display(){
-    stroke(0);
     strokeWeight(3);
+    if(highlighted){
+      stroke(255,0,0);
+    }else{
+      stroke(0);
+    }
     line(x_pos, MIN_AXIS_Y, x_pos, MAX_AXIS_Y);
     fill(0, 102, 153);
     textAlign(CENTER);
@@ -33,6 +38,25 @@ class Axis{
    return label; 
   }
   
+  void highlight(float x){
+    if(x > x_pos - 5 && x < x_pos + 5 && !highlighted){
+      highlighted = true; 
+    }
+  }
   
-  
+  void unhighlight(){
+    if(highlighted){
+      highlighted = false;
+    }
+    
+  }
+  //void move(float x){
+    
+  //}
+  void drag(float x){
+    if(highlighted){
+      this.x_pos = x;
+      this.display();
+    }
+  }
 }

@@ -1,8 +1,13 @@
 class Row{
- 
+ float[] vars;
+ String label;
   
- Row(){
- 
-   
+ Row(String label, float[] vars){
+   this.vars = vars;
+   this.label = label;
  }
+ 
+ 
+ 
+ 
 }

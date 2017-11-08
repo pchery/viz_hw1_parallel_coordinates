@@ -10,13 +10,15 @@ TableReader tr;
 float scale; 
 
 void setup() {
-  size(1500, 1000);
+  size(1500, 1000, P2D);
   background(255,255,255);
   pixelDensity(displayDensity());
   loadData();
 }
 
 void draw() {
+  background(255);
+  
   if (!viz_drawn) {
     
     for(Axis a: axes){   
@@ -35,10 +37,19 @@ void draw() {
          float to_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(to_max-to_min))*(to_max-tr.getTable().getRow(i).getFloat(to)));
          stroke(204, 102, 0);
          strokeWeight(0.2);
-         line(MIN_AXIS_X+(scale*j), from_y_coordinate, MIN_AXIS_X+(scale*(j+1)), to_y_coordinate);
+         line(axes[j].x_pos, from_y_coordinate, axes[j+1].x_pos, to_y_coordinate);
        }
    }
-    viz_drawn = true;
+   
+   
+   for(int i = 1; i < axes.length; i++){
+     if(axes[i - 1].x_pos > axes[i].x_pos){
+       Axis temp = axes[i - 1];
+       axes[i - 1] = axes[i];
+       axes[i] = temp;
+     }
+   }
+    //viz_drawn = true;
   } 
 }
 
@@ -60,3 +71,27 @@ void loadData() {
   }
   
 }
+void mouseDragged(){
+  for(Axis axis: axes){
+    axis.drag(mouseX);
+  }
+}
+
+void mouseClicked(){
+  for(Axis axis: axes){
+    axis.highlight(mouseX);
+  }
+}
+
+void mouseReleased(){
+  for(Axis axis: axes){
+    axis.unhighlight();
+  }
+}
+
+//void mouseMoved(){
+//  //viz_drawn = false;
+//  for(Axis axis: axes){
+//    axis.move(mouseX);
+//  }
+//}
