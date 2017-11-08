@@ -21,7 +21,7 @@ void draw() {
   
   if (!viz_drawn) {
     
-    for(Axis a: axes){   
+    for(Axis a: axes){
      a.display(); 
     }
     
@@ -47,6 +47,9 @@ void draw() {
        Axis temp = axes[i - 1];
        axes[i - 1] = axes[i];
        axes[i] = temp;
+     }else if(axes[i - 1].x_pos > axes[i].x_pos - 10 && axes[i - 1].x_pos < axes[i].x_pos + 10){
+       axes[i].x_pos += 20;
+    
      }
    }
     //viz_drawn = true;

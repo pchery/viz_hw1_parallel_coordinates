@@ -18,10 +18,12 @@ class Axis{
   }
   
   void display(){
-    strokeWeight(3);
+    
     if(highlighted){
+      strokeWeight(7);
       stroke(255,0,0);
     }else{
+      strokeWeight(3);
       stroke(0);
     }
     line(x_pos, MIN_AXIS_Y, x_pos, MAX_AXIS_Y);
