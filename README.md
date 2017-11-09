@@ -4,7 +4,13 @@
 
 ## Storyboards and Sketches:
 
+Storyboard scans:
+![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/prototype1.jpg)
+![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/prototype2.jpg)
+![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/prototyp3.jpg)
+
 ## Visualization Screenshots:
+
 Screenshot of the visualization when first opened:
 ![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz1.png)
 
