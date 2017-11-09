@@ -7,7 +7,7 @@ class Axis{
   float min_data_value;
   float max_data_value;
   float MIN_AXIS_Y = 100;
-  float MAX_AXIS_Y = 800;
+  float MAX_AXIS_Y = height - 100;
   Widget min;
   Widget max;
 

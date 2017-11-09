@@ -1,8 +1,8 @@
 String FILE_NAME = "cars-cleaned.tsv";
 float MIN_AXIS_X = 100;
-float MAX_AXIS_X = 1300;
+float MAX_AXIS_X;
 float MIN_AXIS_Y = 100;
-float MAX_AXIS_Y = 800;
+float MAX_AXIS_Y;
 ArrayList<String> axis_variables = new ArrayList<String>();
 Boolean viz_drawn = false;
 Axis[] axes;
@@ -10,7 +10,10 @@ TableReader tr;
 float scale;
 
 void setup() {
-  size(1500, 1000, P2D);
+  //size(1200, 1000, P2D);
+  fullScreen(P2D);
+  MAX_AXIS_X = width - 100;
+  MAX_AXIS_Y = height - 100;
   background(255,255,255);
   pixelDensity(displayDensity());
   loadData();
