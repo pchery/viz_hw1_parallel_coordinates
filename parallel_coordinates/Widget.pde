@@ -62,19 +62,19 @@ class Widget {
   
   void drag(float x, float y) {
     float new_value = axis.getValue(y);
-    if ((y>=MIN_AXIS_Y && y<=MAX_AXIS_Y)) {
-      if ((this.type.equals("min")) && new_value < this.axis.getWidgetMax().getValue() ||
-          (this.type.equals("max")) && new_value > this.axis.getWidgetMin().getValue()) {
-         this.value = new_value; 
-      }
+    float widgit_margin = (MAX_DATA_VALUE-MIN_DATA_VALUE)/WIDGET_HEIGHT;
+    if ((this.type.equals("min")) && new_value+(widgit_margin/2) < this.axis.getWidgetMax().getValue() ||
+          (this.type.equals("max")) && (new_value-widgit_margin/2) > this.axis.getWidgetMin().getValue()) {
+         if ((y>=MIN_AXIS_Y && y<=MAX_AXIS_Y)) {
+           this.value = new_value; 
+         }
+         else if (y>MAX_AXIS_Y) {
+           this.value = MIN_DATA_VALUE; 
+         }
+         else if (y<MIN_AXIS_Y) {
+           this.value = MAX_DATA_VALUE; 
+         }
     }
-    else if (y>MAX_AXIS_Y) {
-      this.value = MIN_DATA_VALUE;
-    }
-    else if (y<MIN_AXIS_Y) {
-      this.value = MAX_DATA_VALUE;
-    }
-    
   }
   
 }

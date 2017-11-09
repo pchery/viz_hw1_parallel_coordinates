@@ -27,10 +27,9 @@ void draw() {
     for (int i=2; i<tr.getTable().getRowCount(); i++) {
        Boolean valid_row = true;
        for (int j=0; j<axes.length;j++) {
-         String axis_label = axes[j].getLabel();
          float axis_widget_min_value = axes[j].getWidgetMin().getValue();
          float axis_widget_max_value = axes[j].getWidgetMax().getValue();
-         float row_value = tr.getTable().getRow(i).getFloat(axis_label);
+         float row_value = tr.getTable().getRow(i).getFloat(axes[j].getLabel());
          valid_row = valid_row && (row_value>=axis_widget_min_value && row_value<=axis_widget_max_value);
        }
        if (valid_row) {
