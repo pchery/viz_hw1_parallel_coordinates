@@ -7,7 +7,7 @@ ArrayList<String> axis_variables = new ArrayList<String>();
 Boolean viz_drawn = false;
 Axis[] axes;
 TableReader tr;
-float scale; 
+float scale;
 
 void setup() {
   size(1500, 1000, P2D);
@@ -25,6 +25,8 @@ void draw() {
     }
     
     ArrayList<TableRow> valid_rows = new ArrayList<TableRow>();
+    ArrayList<TableRow> invalid_rows = new ArrayList<TableRow>();
+    
     for (int i=2; i<tr.getTable().getRowCount(); i++) {
        Boolean valid_row = true;
        for (int j=0; j<axes.length;j++) {
@@ -37,7 +39,26 @@ void draw() {
        if (valid_row) {
          valid_rows.add(tr.getTable().getRow(i));
        }
-   }
+       else {
+         invalid_rows.add(tr.getTable().getRow(i));
+       }
+    }
+    
+    for (int i=2; i<invalid_rows.size(); i++) {
+       for (int j=0; j<axes.length-1;j++) {
+         String from = axes[j].getLabel();
+         String to = axes[j+1].getLabel();
+         float from_min = tr.getMin(from);
+         float from_max = tr.getMax(from);
+         float to_min = tr.getMin(to);
+         float to_max = tr.getMax(to);
+         float from_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(from_max-from_min))*(from_max-invalid_rows.get(i).getFloat(from)));
+         float to_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(to_max-to_min))*(to_max-invalid_rows.get(i).getFloat(to)));
+         stroke(211,211,211);
+         strokeWeight(1);
+         line(axes[j].x_pos, from_y_coordinate, axes[j+1].x_pos, to_y_coordinate);
+       }
+    }
     
     for (int i=2; i<valid_rows.size(); i++) {
        for (int j=0; j<axes.length-1;j++) {
@@ -49,19 +70,41 @@ void draw() {
          float to_max = tr.getMax(to);
          float from_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(from_max-from_min))*(from_max-valid_rows.get(i).getFloat(from)));
          float to_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(to_max-to_min))*(to_max-valid_rows.get(i).getFloat(to)));
-         stroke(204, 102, 0);
+         stroke(112,128,144);
          strokeWeight(1);
          line(axes[j].x_pos, from_y_coordinate, axes[j+1].x_pos, to_y_coordinate);
        }
    }
    
-   
-   for(int i = 1; i < axes.length; i++){
+   //handle edge cases
+   for(int i = 1; i < axes.length - 1; i++){
+     
+     if(axes[axes.length - 2].x_pos > axes[axes.length -1].x_pos){
+       Axis temp = axes[axes.length - 2];
+       axes[axes.length - 2] = axes[axes.length - 1];
+       axes[axes.length - 1] = temp;
+     }
+     
      if(axes[i - 1].x_pos > axes[i].x_pos){
        Axis temp = axes[i - 1];
        axes[i - 1] = axes[i];
        axes[i] = temp;
      }
+     if(axes[i].highlighted &&(axes[i].x_pos > axes[i-1].x_pos) && (axes[i].x_pos < axes[i-1].x_pos + 20)){
+       axes[i - 1].x_pos -= 20;
+    
+     }
+     if(axes[i].x_pos > axes[i + 1].x_pos - 20 && axes[i].x_pos < axes[i+1].x_pos && axes[i].highlighted){
+       axes[i + 1].x_pos += 20;
+     }
+     if(axes[axes.length - 1].highlighted && (axes[axes.length - 1].x_pos > axes[axes.length-2].x_pos) && (axes[axes.length - 1].x_pos < axes[axes.length-2].x_pos + 20)){
+       axes[axes.length - 2].x_pos -= 20;
+    
+     }
+      if(axes[0].x_pos > axes[1].x_pos - 20 && axes[0].x_pos < axes[1].x_pos && axes[0].highlighted){
+       axes[1].x_pos += 20;
+     }
+     
    }
    
    viz_drawn = true;
@@ -89,9 +132,17 @@ void loadData() {
 }
 void mouseDragged(){
   for(Axis axis: axes){
-    axis.getWidgetMin().drag(mouseX, mouseY);
-    axis.getWidgetMax().drag(mouseX, mouseY);
-    axis.drag(mouseX);
+    if (axis.getHighlighted()) {
+      axis.drag(mouseX);
+    }
+    else if (axis.getWidgetMin().clicked(mouseX,mouseY) || axis.getWidgetMin().getClicked()) {
+      axis.getWidgetMin().setClicked(true);
+      axis.getWidgetMin().drag(mouseX, mouseY);
+    }
+    else if (axis.getWidgetMax().clicked(mouseX,mouseY) || axis.getWidgetMax().getClicked()) {
+      axis.getWidgetMax().setClicked(true);
+      axis.getWidgetMax().drag(mouseX, mouseY);
+    }    
   }
   viz_drawn = false;
 }
@@ -100,7 +151,6 @@ void mouseClicked(){
   for(Axis axis: axes){
     if(!axis.getWidgetMin().clicked(mouseX,mouseY) && !axis.getWidgetMax().clicked(mouseX,mouseY)) {
       axis.highlight(mouseX);
-
     }
   }
   viz_drawn = false;
@@ -109,6 +159,8 @@ void mouseClicked(){
 void mouseReleased(){
   for(Axis axis: axes){
     axis.unhighlight();
+    axis.getWidgetMin().setClicked(false);
+    axis.getWidgetMax().setClicked(false);
   }
   viz_drawn = false;
 }
