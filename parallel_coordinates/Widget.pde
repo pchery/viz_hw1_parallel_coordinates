@@ -2,7 +2,7 @@ class Widget {
   float WIDGET_WIDTH = 25;
   float WIDGET_HEIGHT = 15;
   float MIN_AXIS_Y = 100;
-  float MAX_AXIS_Y = 800;
+  float MAX_AXIS_Y = height - 100;
   float MAX_DATA_VALUE;
   float MIN_DATA_VALUE;
   float x_pos;
