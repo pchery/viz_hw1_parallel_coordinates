@@ -4,6 +4,8 @@ float MAX_AXIS_X;
 float MIN_AXIS_Y = 100;
 float MAX_AXIS_Y;
 ArrayList<String> axis_variables = new ArrayList<String>();
+ArrayList<TableRow> valid_rows = new ArrayList<TableRow>();
+ArrayList<TableRow> invalid_rows = new ArrayList<TableRow>();
 Boolean viz_drawn = false;
 Axis[] axes;
 TableReader tr;
@@ -23,27 +25,29 @@ void draw() {
   
   if (!viz_drawn) {
     background(255,255,255);
-    
-    ArrayList<TableRow> valid_rows = new ArrayList<TableRow>();
-    ArrayList<TableRow> invalid_rows = new ArrayList<TableRow>();
+    valid_rows.clear();
+    invalid_rows.clear();
     
     for (int i=2; i<tr.getTable().getRowCount(); i++) {
-       Boolean valid_row = true;
-       for (int j=0; j<axes.length;j++) {
+      Boolean valid_row = true;
+      int j=0;
+      while (j<axes.length && valid_row) {
          float axis_widget_min_value = axes[j].getWidgetMin().getValue();
          float axis_widget_max_value = axes[j].getWidgetMax().getValue();
          float row_value = tr.getTable().getRow(i).getFloat(axes[j].getLabel());
          valid_row = valid_row && (row_value>=axis_widget_min_value && row_value<=axis_widget_max_value);
+         j++;
        }
-       if (valid_row) {
-         valid_rows.add(tr.getTable().getRow(i));
-       }
-       else {
-         invalid_rows.add(tr.getTable().getRow(i));
-       }
+       
+      if (valid_row) {
+        valid_rows.add(tr.getTable().getRow(i));
+      }
+      else {
+        invalid_rows.add(tr.getTable().getRow(i));
+      }
     }
     
-    for (int i=2; i<invalid_rows.size(); i++) {
+    for (int i=0; i<invalid_rows.size(); i++) {
        for (int j=0; j<axes.length-1;j++) {
          Axis from_axis = axes[j];
          Axis to_axis = axes[j+1];
@@ -55,7 +59,7 @@ void draw() {
        }
     }
     
-    for (int i=2; i<valid_rows.size(); i++) {
+    for (int i=0; i<valid_rows.size(); i++) {
        for (int j=0; j<axes.length-1;j++) {
          Axis from_axis = axes[j];
          Axis to_axis = axes[j+1];
