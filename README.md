@@ -5,17 +5,17 @@
 ## Storyboards and Sketches:
 
 ## Visualization Screenshots:
-Screenshot of the visualization when first opened.
+Screenshot of the visualization when first opened:
 ![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz1.png)
 
-View of axis after being clicked and highlighted, ready to be moved around the screen.
+View of axis after being clicked and highlighted, ready to be moved around the screen:
 ![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz3.png)
 
-View of highlighted axis after being dragged to a new location.
+View of highlighted axis after being dragged to a new location:
 ![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz2.png)
 
-View of filtered data. 
-![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz1.png)
+View of filtered data: 
+![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz4.png)
 
 ## Discussion of Design:
 
