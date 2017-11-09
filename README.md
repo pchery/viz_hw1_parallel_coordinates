@@ -1,14 +1,17 @@
-# viz_hw1_parallel_coordinates
-##### Ayoub Belemlih, Paul Chery
-##### 10 November 2017
-##### Topics Visualization
-##### HW1 
+# Topics in Visualization: Homework 1 Parallel Coordinates Visualization
+###### Authors: Ayoub Belemlih, Paul Chery
+###### Date: 10 November 2017
 
 ## Storyboards and Sketches:
 
 ## Visualization Screenshots:
+![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/tree/master/images/viz1.png)
+![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/tree/master/images/viz2.png)
+![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/tree/master/images/viz3.png)
+![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/tree/master/images/viz1.png)
 
 ## Discussion of Design:
+
 
 ## User Manual:
 
@@ -31,7 +34,7 @@ Press escape to exit the visualization.
 
 * Future work:
 
-Given more time, we would like to be able to highlight a row of the data by clicking on any part of one of the lines. 
+Given more time, we would like to add the ability to highlight a row of the data by clicking on any part of one of the lines. In order to implement this feature, we would need to create a row class and an array to hold all of the rows of the table. This would facilitate the selection and isolation of a specific row. 
 
 
 
