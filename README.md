@@ -5,7 +5,7 @@
 ## Storyboards and Sketches:
 
 ## Visualization Screenshots:
-![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz1.png)
+![alt text](https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz1.png)
 ![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz2.png)
 ![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz3.png)
 ![alt text] (https://github.com/pchery/viz_hw1_parallel_coordinates/blob/master/images/viz1.png)
