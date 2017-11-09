@@ -1,6 +1,6 @@
 class Widget {
-  float WIDGET_WIDTH = 10;
-  float WIDGET_HEIGHT = 20;
+  float WIDGET_WIDTH = 25;
+  float WIDGET_HEIGHT = 15;
   float MIN_AXIS_Y = 100;
   float MAX_AXIS_Y = 800;
   float MAX_DATA_VALUE;
@@ -28,9 +28,11 @@ class Widget {
     float center_y_pos = this.axis.getYCoordinate(value);
     x_pos = this.axis.getXPos()-(WIDGET_WIDTH/2);
     y_pos = center_y_pos - (WIDGET_HEIGHT/2);
+    fill(255,99,71);
     rect(x_pos, y_pos, WIDGET_WIDTH, WIDGET_HEIGHT);
     textAlign(LEFT);
-    text(this.value, this.axis.getXPos()+(WIDGET_WIDTH/2) + 5, center_y_pos);
+    fill(0,0,0);
+    text(String.format("%.2f", this.value), this.axis.getXPos()+(WIDGET_WIDTH/2) + 5, center_y_pos);
   }
   
   Widget opposite() {

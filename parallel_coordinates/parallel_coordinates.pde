@@ -20,9 +20,6 @@ void draw() {
   
   if (!viz_drawn) {
     background(255,255,255);
-    for(Axis a: axes){
-     a.display(); 
-    }
     
     ArrayList<TableRow> valid_rows = new ArrayList<TableRow>();
     ArrayList<TableRow> invalid_rows = new ArrayList<TableRow>();
@@ -46,14 +43,10 @@ void draw() {
     
     for (int i=2; i<invalid_rows.size(); i++) {
        for (int j=0; j<axes.length-1;j++) {
-         String from = axes[j].getLabel();
-         String to = axes[j+1].getLabel();
-         float from_min = tr.getMin(from);
-         float from_max = tr.getMax(from);
-         float to_min = tr.getMin(to);
-         float to_max = tr.getMax(to);
-         float from_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(from_max-from_min))*(from_max-invalid_rows.get(i).getFloat(from)));
-         float to_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(to_max-to_min))*(to_max-invalid_rows.get(i).getFloat(to)));
+         Axis from_axis = axes[j];
+         Axis to_axis = axes[j+1];
+         float from_y_coordinate = from_axis.getYCoordinate(invalid_rows.get(i).getFloat(from_axis.getLabel()));
+         float to_y_coordinate = to_axis.getYCoordinate(invalid_rows.get(i).getFloat(to_axis.getLabel()));
          stroke(211,211,211);
          strokeWeight(1);
          line(axes[j].x_pos, from_y_coordinate, axes[j+1].x_pos, to_y_coordinate);
@@ -62,14 +55,10 @@ void draw() {
     
     for (int i=2; i<valid_rows.size(); i++) {
        for (int j=0; j<axes.length-1;j++) {
-         String from = axes[j].getLabel();
-         String to = axes[j+1].getLabel();
-         float from_min = tr.getMin(from);
-         float from_max = tr.getMax(from);
-         float to_min = tr.getMin(to);
-         float to_max = tr.getMax(to);
-         float from_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(from_max-from_min))*(from_max-valid_rows.get(i).getFloat(from)));
-         float to_y_coordinate = MIN_AXIS_Y + (((MAX_AXIS_Y-MIN_AXIS_Y)/(to_max-to_min))*(to_max-valid_rows.get(i).getFloat(to)));
+         Axis from_axis = axes[j];
+         Axis to_axis = axes[j+1];
+         float from_y_coordinate = from_axis.getYCoordinate(valid_rows.get(i).getFloat(from_axis.getLabel()));
+         float to_y_coordinate = to_axis.getYCoordinate(valid_rows.get(i).getFloat(to_axis.getLabel()));
          stroke(112,128,144);
          strokeWeight(1);
          line(axes[j].x_pos, from_y_coordinate, axes[j+1].x_pos, to_y_coordinate);
@@ -106,6 +95,10 @@ void draw() {
      }
      
    }
+   
+   for(Axis a: axes){
+     a.display(); 
+    }
    
    viz_drawn = true;
  } 
