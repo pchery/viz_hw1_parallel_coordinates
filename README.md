@@ -27,6 +27,8 @@ View of filtered data:
 
 The axes only display the range of each variable as opposed to a typical graph where the range goes from 0 to above the maximum value. We made this decision so that the points along the axis would be more spread out and we could distinguish more easily between separate lines.  
 
+For the filtering, instead of completely removing the rows that are not selected, we decided to reduce their luminance so that the selected ones pop out. We decided it would be better for the user to be able to compare the total data to the filtered data (focus + context).
+
 We decided to allow the user to move the axes to any horizontal location on the screen instead of having them snap in place in defined locations, which is what we originally intended to do. This allows the user more flexibility in choosing what axes they want to look at. Instead of snapping into place, if you drag an axis close to another axis the nonhighlighted axis will move to leave room for the highlighted axis to settle. 
 
 Due to time constraints and our class decomposition, we were unable to implement the highlighting of a specific row. In order to implement this we would need to add a row class. 
