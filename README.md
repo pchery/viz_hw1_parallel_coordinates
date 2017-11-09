@@ -19,7 +19,7 @@ View of filtered data:
 
 ## Discussion of Design:
 
-The axes only dislay the range of each variable as opposed to a typical graph where the range goes from 0 to above the maximum value. We made this decision so that the points along the axis would be more spread out and we could distinguish more easily between separate lines.  
+The axes only display the range of each variable as opposed to a typical graph where the range goes from 0 to above the maximum value. We made this decision so that the points along the axis would be more spread out and we could distinguish more easily between separate lines.  
 
 We decided to allow the user to move the axes to any horizontal location on the screen instead of having them snap in place in defined locations, which is what we originally intended to do. This allows the user more flexibility in choosing what axes they want to look at. Instead of snapping into place, if you drag an axis close to another axis the nonhighlighted axis will move to leave room for the highlighted axis to settle. 
 
