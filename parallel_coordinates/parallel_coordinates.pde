@@ -61,7 +61,7 @@ void draw() {
          Axis to_axis = axes[j+1];
          float from_y_coordinate = from_axis.getYCoordinate(valid_rows.get(i).getFloat(from_axis.getLabel()));
          float to_y_coordinate = to_axis.getYCoordinate(valid_rows.get(i).getFloat(to_axis.getLabel()));
-         stroke(112,128,144);
+         stroke(100,100,100);
          strokeWeight(1);
          line(axes[j].x_pos, from_y_coordinate, axes[j+1].x_pos, to_y_coordinate);
        }
